@@ -1,0 +1,7 @@
+{
+	"code": 400,
+	"message": "validation error",
+	"fields": {
+		"refresh_token": "refresh_token is a required field"
+	}
+}

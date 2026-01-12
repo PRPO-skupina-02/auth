@@ -1,0 +1,7 @@
+{
+	"code": 400,
+	"message": "validation error",
+	"fields": {
+		"email": "email must be a valid email address"
+	}
+}

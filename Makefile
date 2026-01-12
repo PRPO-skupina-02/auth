@@ -17,7 +17,7 @@ install-cli-tools:
 migrate:
 	migrate -database postgres://postgres:postgres@localhost/auth?sslmode=disable -path db/migrations up
 
-migrate-down: 
+migrate-down:
 	migrate -database postgres://postgres:postgres@localhost/auth?sslmode=disable -path db/migrations down
 
 fixtures:

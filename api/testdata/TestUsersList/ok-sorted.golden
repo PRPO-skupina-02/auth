@@ -1,0 +1,37 @@
+{
+	"data": [
+		{
+			"id": "00000000-0000-0000-0000-000000000001",
+			"created_at": "2026-01-01T00:00:00Z",
+			"updated_at": "2026-01-01T00:00:00Z",
+			"email": "admin@example.com",
+			"first_name": "Admin",
+			"last_name": "User",
+			"role": "admin",
+			"active": true
+		},
+		{
+			"id": "00000000-0000-0000-0000-000000000003",
+			"created_at": "2026-01-01T00:00:00Z",
+			"updated_at": "2026-01-01T00:00:00Z",
+			"email": "customer@example.com",
+			"first_name": "Customer",
+			"last_name": "User",
+			"role": "customer",
+			"active": true
+		},
+		{
+			"id": "00000000-0000-0000-0000-000000000002",
+			"created_at": "2026-01-01T00:00:00Z",
+			"updated_at": "2026-01-01T00:00:00Z",
+			"email": "employee@example.com",
+			"first_name": "Employee",
+			"last_name": "User",
+			"role": "employee",
+			"active": true
+		}
+	],
+	"offset": 0,
+	"limit": 10,
+	"total": 3
+}

@@ -1,0 +1,8 @@
+{
+	"code": 400,
+	"message": "validation error",
+	"fields": {
+		"email": "email is a required field",
+		"password": "password is a required field"
+	}
+}
