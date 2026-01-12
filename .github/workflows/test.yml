@@ -23,6 +23,6 @@ jobs:
       - name: Prepare env
         run: cp .env.example .env
       - name: Start database
-        run: docker compose up -d --wait spored-db
+        run: docker compose up -d --wait auth-db
       - name: Test
         run: make test
