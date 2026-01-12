@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/PRPO-skupina-02/auth/auth"
 	"github.com/PRPO-skupina-02/auth/db"
@@ -276,8 +277,18 @@ func TestAdminCreateUser(t *testing.T) {
 
 			r.ServeHTTP(w, req)
 
+			ignoreResp := xtesting.ValuesCheckers{
+				"id":         xtesting.ValueUUID(),
+				"created_at": xtesting.ValueTimeInPastDuration(time.Second),
+				"updated_at": xtesting.ValueTimeInPastDuration(time.Second),
+			}
+
 			assert.Equal(t, testCase.status, w.Code)
-			xtesting.AssertGoldenJSON(t, w)
+			if testCase.status == http.StatusCreated {
+				xtesting.AssertGoldenJSON(t, w, ignoreResp)
+			} else {
+				xtesting.AssertGoldenJSON(t, w)
+			}
 		})
 	}
 }
@@ -360,8 +371,16 @@ func TestUsersUpdate(t *testing.T) {
 
 			r.ServeHTTP(w, req)
 
+			ignoreResp := xtesting.ValuesCheckers{
+				"updated_at": xtesting.ValueTimeInPastDuration(time.Second),
+			}
+
 			assert.Equal(t, testCase.status, w.Code)
-			xtesting.AssertGoldenJSON(t, w)
+			if testCase.status == http.StatusOK {
+				xtesting.AssertGoldenJSON(t, w, ignoreResp)
+			} else {
+				xtesting.AssertGoldenJSON(t, w)
+			}
 		})
 	}
 }
@@ -423,7 +442,10 @@ func TestUsersDelete(t *testing.T) {
 			r.ServeHTTP(w, req)
 
 			assert.Equal(t, testCase.status, w.Code)
-			xtesting.AssertGoldenJSON(t, w)
+			// For 204 No Content, don't expect JSON response
+			if testCase.status != http.StatusNoContent {
+				xtesting.AssertGoldenJSON(t, w)
+			}
 		})
 	}
 }

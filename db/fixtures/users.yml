@@ -1,7 +1,7 @@
 - id: "00000000-0000-0000-0000-000000000001"
   email: "admin@example.com"
   # Password: admin123
-  password_hash: "$2a$10$VWvbYwCPj0xdXOTLpYiH3.TQU0VqEh.Xqkj5LBK4v4cE9g5WtZOxG"
+  password_hash: "$2a$10$alJDk4dMo5NczkOS4wcWKuuyR77QJmZFRRVuCYweyrmq7tytWxI5i"
   first_name: "Admin"
   last_name: "User"
   role: "admin"
@@ -12,7 +12,7 @@
 - id: "00000000-0000-0000-0000-000000000002"
   email: "employee@example.com"
   # Password: employee123
-  password_hash: "$2a$10$VWvbYwCPj0xdXOTLpYiH3.TQU0VqEh.Xqkj5LBK4v4cE9g5WtZOxG"
+  password_hash: "$2a$10$qXiuoSPV5ienCrZYzkGm0.yDfGpzw6JyP4/fVsVFaWULC1blUOoDC"
   first_name: "Employee"
   last_name: "User"
   role: "employee"
@@ -23,7 +23,7 @@
 - id: "00000000-0000-0000-0000-000000000003"
   email: "customer@example.com"
   # Password: customer123
-  password_hash: "$2a$10$VWvbYwCPj0xdXOTLpYiH3.TQU0VqEh.Xqkj5LBK4v4cE9g5WtZOxG"
+  password_hash: "$2a$10$UfPdyCFH9SYlkKIGG.2zz.a9juLD2QM/sy/HAyBibBWkJgKiVtnpu"
   first_name: "Customer"
   last_name: "User"
   role: "customer"

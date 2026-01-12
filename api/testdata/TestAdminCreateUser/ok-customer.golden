@@ -1,7 +1,7 @@
 {
-	"id": "d3a95e1e-4a85-4475-b0d7-4f17ac6843b2",
-	"created_at": "2026-01-12T16:00:26.659886Z",
-	"updated_at": "2026-01-12T16:00:26.659886Z",
+	"id": "-- Dynamic value --",
+	"created_at": "-- Dynamic value --",
+	"updated_at": "-- Dynamic value --",
 	"email": "newcustomer@example.com",
 	"first_name": "New",
 	"last_name": "Customer",
