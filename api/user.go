@@ -10,12 +10,12 @@ import (
 )
 
 type AdminCreateUserRequest struct {
-	Email     string          `json:"email" binding:"required,email"`
-	Password  string          `json:"password" binding:"required,min=8"`
-	FirstName string          `json:"first_name" binding:"omitempty,min=1"`
-	LastName  string          `json:"last_name" binding:"omitempty,min=1"`
-	Role      models.UserRole `json:"role" binding:"required,oneof=customer employee admin"`
-	Active    bool            `json:"active"`
+	Email     string `json:"email" binding:"required,email"`
+	Password  string `json:"password" binding:"required,min=8"`
+	FirstName string `json:"first_name" binding:"omitempty,min=1"`
+	LastName  string `json:"last_name" binding:"omitempty,min=1"`
+	Role      string `json:"role" binding:"required,oneof=customer employee admin"`
+	Active    bool   `json:"active"`
 }
 
 // AdminCreateUser
@@ -44,12 +44,6 @@ func AdminCreateUser(c *gin.Context) {
 		return
 	}
 
-	// Validate role
-	if !req.Role.IsValid() {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid role"})
-		return
-	}
-
 	// Check if user already exists
 	exists, err := models.UserExists(tx, req.Email)
 	if err != nil {
@@ -66,7 +60,7 @@ func AdminCreateUser(c *gin.Context) {
 		Email:     req.Email,
 		FirstName: req.FirstName,
 		LastName:  req.LastName,
-		Role:      req.Role,
+		Role:      models.UserRole(req.Role),
 		Active:    req.Active,
 	}
 

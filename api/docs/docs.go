@@ -754,15 +754,11 @@ const docTemplate = `{
                     "minLength": 8
                 },
                 "role": {
+                    "type": "string",
                     "enum": [
                         "customer",
                         "employee",
                         "admin"
-                    ],
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/models.UserRole"
-                        }
                     ]
                 }
             }

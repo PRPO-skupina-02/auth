@@ -16,12 +16,11 @@ definitions:
         minLength: 8
         type: string
       role:
-        allOf:
-        - $ref: '#/definitions/models.UserRole'
         enum:
         - customer
         - employee
         - admin
+        type: string
     required:
     - email
     - password
