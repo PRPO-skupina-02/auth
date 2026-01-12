@@ -30,8 +30,8 @@ type User struct {
 	ID           uuid.UUID `gorm:"type:uuid;primary_key;default:gen_random_uuid()"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
-	Email        string   `gorm:"uniqueIndex;not null"`
-	PasswordHash string   `gorm:"not null" json:"-"`
+	Email        string `gorm:"uniqueIndex;not null"`
+	PasswordHash string `gorm:"not null" json:"-"`
 	FirstName    string
 	LastName     string
 	Role         UserRole `gorm:"type:user_role;default:'customer'"`

@@ -3,10 +3,10 @@ package api
 import (
 	"net/http"
 
+	_ "github.com/PRPO-skupina-02/auth/api/docs"
 	"github.com/PRPO-skupina-02/auth/auth"
 	"github.com/PRPO-skupina-02/auth/models"
 	"github.com/PRPO-skupina-02/common/middleware"
-	_ "github.com/PRPO-skupina-02/auth/api/docs"
 	"github.com/gin-gonic/gin"
 	ut "github.com/go-playground/universal-translator"
 	swaggerFiles "github.com/swaggo/files"

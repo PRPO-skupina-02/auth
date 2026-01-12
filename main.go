@@ -5,11 +5,11 @@ import (
 	"log/slog"
 	"os"
 
+	"github.com/PRPO-skupina-02/auth/api"
+	"github.com/PRPO-skupina-02/auth/db"
 	"github.com/PRPO-skupina-02/common/database"
 	"github.com/PRPO-skupina-02/common/logging"
 	"github.com/PRPO-skupina-02/common/validation"
-	"github.com/PRPO-skupina-02/auth/api"
-	"github.com/PRPO-skupina-02/auth/db"
 	"github.com/gin-gonic/gin"
 )
 
