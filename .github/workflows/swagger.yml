@@ -1,0 +1,39 @@
+name: Swagger Sanity Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  generate-spec:
+    name: Check generated spec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: "go.mod"
+      - name: Download dependencies
+        run: go mod download
+      - name: Install CLI tools
+        run: make install-cli-tools
+      - name: Adjust PATH
+        run: |
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Generate docs
+        run: |
+          make docs
+
+      - name: Check if swagger files have changes
+        run: |
+          git status
+          if [[ $(git status --porcelain) ]]; then
+            echo "Please regenerate swagger definitions and commit them in this PR. Command to regenerate: npm run swagger"
+            git --no-pager diff
+            exit 1
+          fi

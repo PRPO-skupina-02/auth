@@ -1,0 +1,45 @@
+services:
+
+  auth-db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: auth 
+    volumes:
+      - auth-pgdata:/var/lib/postgresql/data 
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 3s
+      timeout: 10s
+      retries: 5
+
+
+  auth:
+    ports:
+      - "8080:8080"
+    restart: always
+    build: .
+    depends_on:
+      auth-db:
+        condition: service_healthy
+    environment:
+      - LOG_LEVEL=DEBUG
+      - TZ=
+      - POSTGRES_IP=auth-db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DATABASE_NAME=auth
+      - POSTGRES_TEST_DATABASE_NAME=auth_test
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthcheck"]
+      interval: 3s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  auth-pgdata:
