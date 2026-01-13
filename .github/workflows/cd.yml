@@ -6,8 +6,8 @@ on:
       - 'v*.*.*'
 
 env:
-  GKE_CLUSTER: prpo-cluster
-  GKE_ZONE: us-central1
+  GKE_CLUSTER: cinecore-cluster
+  GKE_REGION: europe-west3
   IMAGE_NAME: ghcr.io/prpo-skupina-02/auth
 
 jobs:
@@ -63,7 +63,7 @@ jobs:
 
       - name: Get GKE credentials
         run: |
-          gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --zone ${{ env.GKE_ZONE }}
+          gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --region ${{ env.GKE_REGION }}
 
       - name: Update deployment image tag
         run: |
