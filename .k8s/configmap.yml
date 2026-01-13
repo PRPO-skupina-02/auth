@@ -5,5 +5,4 @@ metadata:
   namespace: production
 data:
   LOG_LEVEL: "INFO"
-  RABBITMQ_URL: "amqp://rabbitmq:5672"
-  FRONTEND_URL: "https://frontend.prpo.timhrovat.com"
+  FRONTEND_URL: "https://frontend.cinecore.timhrovat.com"
