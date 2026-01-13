@@ -134,6 +134,16 @@ definitions:
     - RoleCustomer
     - RoleEmployee
     - RoleAdmin
+  request.PaginatedResponse:
+    properties:
+      data: {}
+      limit:
+        type: integer
+      offset:
+        type: integer
+      total:
+        type: integer
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -378,9 +388,14 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/api.UserResponse'
-            type: array
+            allOf:
+            - $ref: '#/definitions/request.PaginatedResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/api.UserResponse'
+                  type: array
+              type: object
         "400":
           description: Bad Request
           schema:
