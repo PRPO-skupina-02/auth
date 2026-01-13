@@ -6,9 +6,9 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: auth 
+      POSTGRES_DB: auth
     volumes:
-      - auth-pgdata:/var/lib/postgresql/data 
+      - auth-pgdata:/var/lib/postgresql/data
     ports:
       - 5432:5432
     healthcheck:
@@ -35,6 +35,8 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DATABASE_NAME=auth
       - POSTGRES_TEST_DATABASE_NAME=auth_test
+      - RABBITMQ_URL=amqp://guest:guest@localhost:5672/
+      - FRONTEND_URL=http://localhost:5173
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/healthcheck"]
       interval: 3s

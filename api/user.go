@@ -1,9 +1,12 @@
 package api
 
 import (
+	"log/slog"
 	"net/http"
+	"os"
 
 	"github.com/PRPO-skupina-02/auth/models"
+	"github.com/PRPO-skupina-02/common/messaging"
 	"github.com/PRPO-skupina-02/common/middleware"
 	"github.com/PRPO-skupina-02/common/request"
 	"github.com/gin-gonic/gin"
@@ -72,6 +75,35 @@ func AdminCreateUser(c *gin.Context) {
 	if err := user.Create(tx); err != nil {
 		_ = c.Error(err)
 		return
+	}
+
+	// Send welcome email for customer users asynchronously
+	if user.Role == models.RoleCustomer {
+		go func() {
+			rabbitmqURL := os.Getenv("RABBITMQ_URL")
+			if rabbitmqURL == "" {
+				rabbitmqURL = "amqp://guest:guest@localhost:5672/"
+			}
+
+			frontendURL := os.Getenv("FRONTEND_URL")
+			if frontendURL == "" {
+				frontendURL = "http://localhost:5173"
+			}
+
+			emailMsg := messaging.NewEmailMessage(
+				user.Email,
+				"welcome",
+				map[string]interface{}{
+					"Subject":  "Welcome to CineCore!",
+					"UserName": user.FirstName,
+					"AppLink":  frontendURL,
+				},
+			)
+
+			if err := messaging.PublishEmailSimple(rabbitmqURL, emailMsg.To, emailMsg.Template, emailMsg.TemplateData); err != nil {
+				slog.Error("Failed to publish welcome email", "email", user.Email, "error", err)
+			}
+		}()
 	}
 
 	c.JSON(http.StatusCreated, newUserResponse(user))

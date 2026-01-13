@@ -1,11 +1,14 @@
 package api
 
 import (
+	"log/slog"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/PRPO-skupina-02/auth/auth"
 	"github.com/PRPO-skupina-02/auth/models"
+	"github.com/PRPO-skupina-02/common/messaging"
 	"github.com/PRPO-skupina-02/common/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -105,6 +108,33 @@ func RegisterUser(c *gin.Context) {
 		_ = c.Error(err)
 		return
 	}
+
+	// Send welcome email asynchronously
+	go func() {
+		rabbitmqURL := os.Getenv("RABBITMQ_URL")
+		if rabbitmqURL == "" {
+			rabbitmqURL = "amqp://guest:guest@localhost:5672/"
+		}
+
+		frontendURL := os.Getenv("FRONTEND_URL")
+		if frontendURL == "" {
+			frontendURL = "http://localhost:5173"
+		}
+
+		emailMsg := messaging.NewEmailMessage(
+			user.Email,
+			"welcome",
+			map[string]interface{}{
+				"Subject":  "Welcome to CineCore!",
+				"UserName": user.FirstName,
+				"AppLink":  frontendURL,
+			},
+		)
+
+		if err := messaging.PublishEmailSimple(rabbitmqURL, emailMsg.To, emailMsg.Template, emailMsg.TemplateData); err != nil {
+			slog.Error("Failed to publish welcome email", "email", user.Email, "error", err)
+		}
+	}()
 
 	c.JSON(http.StatusCreated, newUserResponse(user))
 }
