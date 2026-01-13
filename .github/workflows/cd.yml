@@ -8,7 +8,7 @@ on:
 env:
   GKE_CLUSTER: prpo-cluster
   GKE_ZONE: us-central1
-  IMAGE_NAME: ghcr.io/${{ github.repository }}
+  IMAGE_NAME: ghcr.io/prpo-skupina-02/auth
 
 jobs:
   deploy:
