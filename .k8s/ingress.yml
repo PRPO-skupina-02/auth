@@ -4,15 +4,14 @@ metadata:
   name: auth
   namespace: production
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     kubernetes.io/ingress.class: "gce"
 spec:
   tls:
   - hosts:
-    - auth.prpo.timhrovat.com
+    - auth.cinecore.timhrovat.com
     secretName: auth-tls
   rules:
-  - host: auth.prpo.timhrovat.com
+  - host: auth.cinecore.timhrovat.com
     http:
       paths:
       - path: /
