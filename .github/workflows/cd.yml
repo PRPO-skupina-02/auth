@@ -71,9 +71,7 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          kubectl apply -f .k8s/
-
-      - name: Verify deployment
-        run: |
-          kubectl rollout status deployment/auth -n production
-          kubectl get services -n production
+          kubectl apply -f .k8s/serviceaccount.yml
+          kubectl apply -f .k8s/deployment.yml
+          kubectl apply -f .k8s/service.yml
+          kubectl rollout status deployment/auth -n production --timeout=5m
