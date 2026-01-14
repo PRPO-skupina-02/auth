@@ -16,6 +16,38 @@ spec:
         app: auth
     spec:
       serviceAccountName: auth-sa
+      initContainers:
+      - name: migration
+        image: ghcr.io/prpo-skupina-02/auth:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Running auth database migrations..."
+          migrate -path=/app/db/migrations \
+            -database "postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_IP}:${POSTGRES_PORT}/${POSTGRES_DATABASE_NAME}?sslmode=disable" \
+            up
+          echo "Migrations completed successfully!"
+        env:
+        - name: POSTGRES_IP
+          valueFrom:
+            secretKeyRef:
+              name: cloudsql-db-credentials
+              key: host
+        - name: POSTGRES_PORT
+          value: "5432"
+        - name: POSTGRES_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: cloudsql-db-credentials
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: cloudsql-db-credentials
+              key: password
+        - name: POSTGRES_DATABASE_NAME
+          value: "auth"
       containers:
       - name: auth
         image: ghcr.io/prpo-skupina-02/auth:latest
