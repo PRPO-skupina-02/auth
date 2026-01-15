@@ -6,7 +6,7 @@ on:
       - 'v*.*.*'
 
 env:
-  GKE_CLUSTER: cinecore-cluster
+  GKE_CLUSTER: cinecore-standard
   GKE_REGION: europe-west3
   IMAGE_NAME: ghcr.io/prpo-skupina-02/auth
 
